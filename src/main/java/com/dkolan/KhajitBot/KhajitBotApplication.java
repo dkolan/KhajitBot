@@ -1,5 +1,6 @@
 package com.dkolan.KhajitBot;
 
+import com.dkolan.KhajitBot.listeners.PingListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class KhajitBotApplication {
 	@Autowired
 	private Environment env;
 
+	@Autowired
+	private PingListener pingListener;
+
 	public static void main(String[] args) {
 		SpringApplication.run(KhajitBotApplication.class, args);
 	}
@@ -29,11 +33,7 @@ public class KhajitBotApplication {
 				.login()
 				.join();
 
-		api.addMessageCreateListener(event -> {
-			if(event.getMessageContent().equals(".ping")) {
-				event.getChannel().sendMessage("Pong!");
-			}
-		});
+		api.addMessageCreateListener(pingListener);
 
 		return api;
 	}
