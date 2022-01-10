@@ -1,6 +1,7 @@
 package com.dkolan.KhajitBot;
 
 import com.dkolan.KhajitBot.listeners.PingListener;
+import com.dkolan.KhajitBot.listeners.RateListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class KhajitBotApplication {
 	@Autowired
 	private PingListener pingListener;
 
+	@Autowired
+	private RateListener rateListener;
+
 	public static void main(String[] args) {
 		SpringApplication.run(KhajitBotApplication.class, args);
 	}
@@ -34,6 +38,8 @@ public class KhajitBotApplication {
 				.join();
 
 		api.addMessageCreateListener(pingListener);
+
+		api.addMessageCreateListener(rateListener);
 
 		return api;
 	}
